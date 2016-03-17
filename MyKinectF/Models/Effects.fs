@@ -77,10 +77,10 @@ module Effects =
                 null,
                 Rect(width - clipBoundsThickness, 0.0, clipBoundsThickness, height))
 
-    let drawImage (dg: DrawingGroup) (d: DrawingImage) (g: GreenScreenBitmapGenerator) (f: KinectFrames) =
+    let drawImage (dg: DrawingGroup) (g: GreenScreenBitmapGenerator) (frames: KinectFrames) =
         use dc = dg.Open()
         let coordinateMapper = Kinect.manager.KinectSensor.CoordinateMapper
-        let bodies = f.Body.Bodies()
+        let bodies = frames.Body.Bodies()
         // Draw a transparent background to set the render size
         dc.DrawRectangle(Brushes.Transparent, null, new Rect(0.0, 0.0, g.Bitmap.Width, g.Bitmap.Height))
         for body in bodies do
@@ -109,5 +109,7 @@ module Effects =
         // prevent drawing outside of our render area
         //_drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, _depthWidth, _depthHeight));
         dg.ClipGeometry <- RectangleGeometry(Rect(0.0, 0.0, g.Bitmap.Width, g.Bitmap.Height))
-        d
+        
+        // return frames, so that we can chain observable operations
+        frames
 

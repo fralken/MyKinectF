@@ -17,7 +17,7 @@
             <Image Source="{Binding ImageSource}" />
             <Image Source="Images/monument_valley-fg.png" Stretch="UniformToFill"/>
             <Image Source="{Binding DrawImage}" />
-            <TextBlock x:Name="fps" HorizontalAlignment="Left" Height="37" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="441" FontSize="18.667" Foreground="#FFBEBEBE"/>
+            <TextBlock x:Name="fps" HorizontalAlignment="Left" Height="37" Margin="10,10,0,0" TextWrapping="Wrap" Text="{Binding FPS}" VerticalAlignment="Top" Width="441" FontSize="18.667" Foreground="#FFBEBEBE"/>
         </Grid>
     </Viewbox>
 </Window>
