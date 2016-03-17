@@ -11,17 +11,15 @@ type FpsTick = {count: int; time: DateTime; min: float; max: float}
 type KinectViewModel() as self =
     inherit ViewModule.ViewModelBase()
 
+    // Green screen
     let greenScreen = GreenScreenBitmapGenerator.Create Kinect.manager.KinectSensor.CoordinateMapper
     let image = self.Factory.Backing(<@ self.ImageSource @>, greenScreen.Bitmap)
-    let updateGreenScreen (frames: KinectFrames) =
-        image.Value <- (frames |> Effects.updateGreenScreen greenScreen).Bitmap
-        frames
 
     // Create the drawing group we'll use for drawing
     let drawingGroup = DrawingGroup()
 
+    // Fps count
     let fps = self.Factory.Backing(<@ self.FPS @>, "")
-
     let countFps current _ =
         let {count=c; time=t; min=min; max=max} = current
         let now = DateTime.Now
@@ -36,11 +34,11 @@ type KinectViewModel() as self =
             {count=c+1; time=t; min=min; max=max}
 
     let subscribe = Kinect.manager.MultiFrameSourceArrived
-                    |> Observable.map updateGreenScreen
+                    |> Observable.map (Effects.updateGreenScreen greenScreen)
                     |> Observable.map (Effects.drawImage drawingGroup greenScreen)
                     |> Observable.map Kinect.manager.DisposeFrames
                     |> Observable.scan countFps {count=0; time=DateTime.Now; min=0.0; max=0.0}
-                    |> Observable.subscribe ignore
+                    |> Observable.subscribe (fun _ -> image.Value <- greenScreen.Bitmap)
        
     member __.ImageSource = image.Value
     member __.DrawImage = DrawingImage(drawingGroup)

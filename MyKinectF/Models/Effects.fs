@@ -27,7 +27,7 @@ module Effects =
 
     let updateGreenScreen (g: GreenScreenBitmapGenerator) (f: KinectFrames) =
         g.Update(f.Color, f.Depth, f.BodyIndex)
-        g 
+        f 
 
     /// <summary>
     /// Draws a hand symbol if the hand is tracked: red circle = closed, green circle = opened; blue circle = lasso
