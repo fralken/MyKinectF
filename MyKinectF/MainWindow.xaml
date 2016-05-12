@@ -4,7 +4,6 @@
     xmlns:local="clr-namespace:MainWindow;assembly=MyKinectF"
     xmlns:viewmodel="clr-namespace:ViewModels;assembly=MyKinectF"
     xmlns:fsxaml="http://github.com/fsprojects/FsXaml"
-    fsxaml:ViewController.Custom="{x:Type local:MainWindowController}"
     WindowStyle="None" ResizeMode="NoResize" Background="Black">
 
     <Window.DataContext>
